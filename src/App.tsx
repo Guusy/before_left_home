@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import ItemsService, { Item } from './services/ItemsService'
 import './App.css';
+import AddItemForm from './components/AddItemForm';
+import ItemsList from './components/ItemsList';
 
 function App() {
+  const [items, setItems] = useState<Item[]>([])
+  const refreshList = () => {
+    const itemsResponse = ItemsService.getAll()
+    setItems(itemsResponse)
+  }
+
+  useEffect(()=> {
+    const itemsResponse = ItemsService.getAll()
+    setItems(itemsResponse)
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        Before left home
       </header>
+      <div>
+       <AddItemForm onFinish={refreshList} />
+      </div>
+      <ItemsList items={items} refreshList={refreshList} />
     </div>
   );
 }
