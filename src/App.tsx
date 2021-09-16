@@ -3,6 +3,7 @@ import ItemsService, { Item } from './services/ItemsService'
 import './App.css';
 import AddItemForm from './components/AddItemForm';
 import ItemsList from './components/ItemsList';
+import SmokingComponent from './components/Smoking';
 
 function App() {
   const [items, setItems] = useState<Item[]>([])
@@ -11,7 +12,7 @@ function App() {
     setItems(itemsResponse)
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     const itemsResponse = ItemsService.getAll()
     setItems(itemsResponse)
   }, [])
@@ -21,10 +22,15 @@ function App() {
       <header className="App-header">
         Before left home
       </header>
+      <hr />
+      <SmokingComponent />
+      <hr />
       <div>
-       <AddItemForm onFinish={refreshList} />
+        <AddItemForm onFinish={refreshList} />
       </div>
       <ItemsList items={items} refreshList={refreshList} />
+
+
     </div>
   );
 }

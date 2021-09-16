@@ -7,16 +7,14 @@ export type Item = {
 export const ID_PREFIX = 'before_left'
 class ItemsService {
 
-    getAll() : Item[] {
+    getAll(): Item[] {
         const items = { ...localStorage };
-        console.log();
-        const itemsArray = Object.keys(items).filter(key => key.includes('before_left')).map(key => ({
-            id: key,
-            value: items[key]
-        }))
-        console.log(itemsArray);
-        
-        return itemsArray
+        return Object
+            .keys(items)
+            .filter(key => key.includes(ID_PREFIX)).map(key => ({
+                id: key,
+                value: items[key]
+            }))
     }
 
     add({ id, value }: { id: string, value: string }) {
